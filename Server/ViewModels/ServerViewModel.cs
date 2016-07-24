@@ -1,21 +1,24 @@
-﻿using Server.Models;
+﻿using Caliburn.Micro;
+using Common;
+using Server.Models;
 using System;
-using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.Sockets;
+using System.Text;
 
 namespace Server.ViewModels
 {
     internal class ServerViewModel : BaseViewModel
     {
-        private List<ClientModel> _clients;
+        private BindableCollection<ClientModel> _clients;
         private ClientModel _selectedClient;
 
         private IPEndPoint _serverEndpoint;
 
         public ServerViewModel()
         {
-            Clients = new List<ClientModel>();
+            Clients = new BindableCollection<ClientModel>();
 
             Socket server = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 
@@ -25,7 +28,7 @@ namespace Server.ViewModels
             server.BeginAccept(new AsyncCallback(AcceptCallback), server);
         }
 
-        public List<ClientModel> Clients
+        public BindableCollection<ClientModel> Clients
         {
             get { return _clients; }
             set
@@ -41,7 +44,7 @@ namespace Server.ViewModels
             {
                 if (_serverEndpoint == null)
                 {
-                    string serverAddress = "127.0.0.1";
+                    string serverAddress = "192.168.0.108";
                     int port = 8000;
 
                     IPAddress ipAddress = IPAddress.Parse(serverAddress);
@@ -83,7 +86,8 @@ namespace Server.ViewModels
 
         public void OnShutdown()
         {
-
+            byte[] message = Encoding.ASCII.GetBytes(((int)MessageType.Shutdown).ToString());
+            Clients.ToList().ForEach(x => x.Socket.Send(message));
         }
     }
 }
