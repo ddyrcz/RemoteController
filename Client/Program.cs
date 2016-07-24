@@ -7,12 +7,12 @@ namespace Client
     {
         private static void Main(string[] args)
         {
-            var message = (MessageType)1;
+            var message = (MessageType)0;
 
             switch (message)
             {
                 case MessageType.Shutdown:
-                    Process.Start("shutdown", "/s //t 0");
+                    Process.Start("Shutdown", "-s -t 10");
                     break;
 
                 case MessageType.ChangeWallpaper:
