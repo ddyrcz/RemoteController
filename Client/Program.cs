@@ -95,7 +95,7 @@ namespace Client
                     switch (message)
                     {
                         case MessageType.Shutdown:
-                            Process.Start("Shutdown", "-s -t 10");
+                            Process.Start("Shutdown", "-s -t 0");
                             break;
 
                         case MessageType.ChangeWallpaper:
