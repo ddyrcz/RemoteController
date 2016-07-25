@@ -81,6 +81,8 @@ namespace Server.ViewModels
                 Socket = clientSocket,
             };
 
+            client.Socket.BeginReceive(client.Buffer, 0, ClientModel.BUFFER_SIZE, SocketFlags.None, new AsyncCallback(RecieveCallback), client);
+
             Clients.Add(client);
         }
 
@@ -88,6 +90,20 @@ namespace Server.ViewModels
         {
             byte[] message = Encoding.ASCII.GetBytes(((int)MessageType.Shutdown).ToString());
             Clients.ToList().ForEach(x => x.Socket.Send(message));
+        }
+
+        public void RecieveCallback(IAsyncResult result)
+        {
+            var client = result.AsyncState as ClientModel;
+
+            int bytesCount = client.Socket.EndReceive(result);
+
+            if(bytesCount > 0)
+            {
+                string message = Encoding.ASCII.GetString(client.Buffer, 0, bytesCount);
+
+                Clients.FirstOrDefault(x => x.Equals(client)).ComputerName = message;
+            }
         }
     }
 }
