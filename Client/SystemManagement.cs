@@ -34,6 +34,10 @@ namespace Client
                             action = new ChangeWallpaper();
                             break;
 
+                        case MessageType.SystemBeep:
+                            action = new SystemBeep();
+                            break;
+
                         default:
                             break;
                     }

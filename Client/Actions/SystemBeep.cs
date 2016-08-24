@@ -4,13 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Common
+namespace Client.Actions
 {
-    public enum MessageType
+    class SystemBeep : IAction
     {
-        Shutdown,
-        ChangeWallpaper,
-        SystemBeep,
-
+        public void Invoke()
+        {
+            Console.Beep();
+        }
     }
 }

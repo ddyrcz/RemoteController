@@ -15,14 +15,29 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
 
-        <ListView DisplayMemberPath="ComputerName"
+        <ListView Grid.ColumnSpan="2"
+                  DisplayMemberPath="ComputerName"
                   ItemsSource="{Binding Clients}"
                   SelectedItem="{Binding SelectedClient}" />
         <Button Grid.Row="1"
+                HorizontalAlignment="Stretch"
                 cm:Message.Attach="[Event Click] = [Action OnShutdown]"
-                Background="DarkRed">
+                Background="DarkRed"
+                FontWeight="Bold"
+                Foreground="White">
             Shutdown all
+        </Button>
+        <Button Grid.Row="1"
+                Grid.Column="1"
+                HorizontalAlignment="Stretch"
+                cm:Message.Attach="[Event Click] = [Action OnBeep]"
+                Background="Gray">
+            Beep all
         </Button>
     </Grid>
 </Window>

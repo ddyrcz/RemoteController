@@ -48,7 +48,6 @@ namespace Server.ViewModels
                     string serverAddress = ConfigurationManager.AppSettings["ServerAddress"].ToString();
                     int port = int.Parse(ConfigurationManager.AppSettings["ServerPort"].ToString());
 
-
                     IPAddress ipAddress = IPAddress.Parse(serverAddress);
 
                     _serverEndpoint = new IPEndPoint(ipAddress, port);
@@ -79,7 +78,7 @@ namespace Server.ViewModels
 
             var client = new ClientModel()
             {
-                ComputerName = "unknow",
+                ComputerName = "Unknow",
                 Socket = clientSocket,
             };
 
@@ -94,13 +93,19 @@ namespace Server.ViewModels
             Clients.ToList().ForEach(x => x.Socket.Send(message));
         }
 
+        public void OnBeep()
+        {
+            byte[] message = Encoding.ASCII.GetBytes(((int)MessageType.SystemBeep).ToString());
+            Clients.ToList().ForEach(x => x.Socket.Send(message));
+        }
+
         public void RecieveCallback(IAsyncResult result)
         {
             var client = result.AsyncState as ClientModel;
 
             int bytesCount = client.Socket.EndReceive(result);
 
-            if(bytesCount > 0)
+            if (bytesCount > 0)
             {
                 string message = Encoding.ASCII.GetString(client.Buffer, 0, bytesCount);
 
