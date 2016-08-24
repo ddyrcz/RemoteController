@@ -36,8 +36,8 @@ namespace Client
             {
                 if (_serverEndpoint == null)
                 {
-                    string serverAddress = "192.168.0.108";
-                    int port = 8000;
+                    string serverAddress = ConfigurationManager.AppSettings["ServerAddress"].ToString();
+                    int port = int.Parse(ConfigurationManager.AppSettings["ServerPort"].ToString());
 
                     IPAddress ipAddress = IPAddress.Parse(serverAddress);
 
