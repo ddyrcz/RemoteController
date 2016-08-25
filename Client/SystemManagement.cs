@@ -1,7 +1,8 @@
-﻿using Client.Actions;
-using Client.Models;
+﻿using Client.Models;
 using Common;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Client
@@ -13,38 +14,43 @@ namespace Client
             return Environment.MachineName;
         }
 
-        public static void ManageCommands(SocketModel client)
+        public static void ManageActions(SocketModel client)
         {
-            IAction action = null;
-            ActionType message;
+            ActionType actionType;
 
             while (true)
             {
                 int bytesCount = client.Socket.Receive(client.Buffer);
 
-                if (Enum.TryParse(Encoding.ASCII.GetString(client.Buffer, 0, bytesCount), out message))
+                if (Enum.TryParse(Encoding.ASCII.GetString(client.Buffer, 0, bytesCount), out actionType))
                 {
-                    switch (message)
+                    switch (actionType)
                     {
                         case ActionType.Shutdown:
-                            action = new Shutdown();
+                            InvokePlugins(PluginManager.GetAvailablePlugins(), ActionType.Shutdown);
                             break;
 
                         case ActionType.ChangeWallpaper:
-                            action = new ChangeWallpaper();
+                            InvokePlugins(PluginManager.GetAvailablePlugins(), ActionType.ChangeWallpaper);
                             break;
 
                         case ActionType.SystemBeep:
-                            action = new SystemBeep();
+                            InvokePlugins(PluginManager.GetAvailablePlugins(), ActionType.SystemBeep);
                             break;
 
                         default:
                             break;
                     }
-
-                    action?.Invoke();
                 }
             }
+        }
+
+        private static void InvokePlugins(IEnumerable<IPlugin> availablePlugins, ActionType type)
+        {
+            availablePlugins
+                .Where(x => x.GetType() == type)
+                .ToList()
+                .ForEach(x => x.Invoke());
         }
     }
 }
