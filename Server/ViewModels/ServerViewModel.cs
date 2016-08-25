@@ -89,13 +89,13 @@ namespace Server.ViewModels
 
         public void OnShutdown()
         {
-            byte[] message = Encoding.ASCII.GetBytes(((int)MessageType.Shutdown).ToString());
+            byte[] message = Encoding.ASCII.GetBytes(((int)ActionType.Shutdown).ToString());
             Clients.ToList().ForEach(x => x.Socket.Send(message));
         }
 
         public void OnBeep()
         {
-            byte[] message = Encoding.ASCII.GetBytes(((int)MessageType.SystemBeep).ToString());
+            byte[] message = Encoding.ASCII.GetBytes(((int)ActionType.SystemBeep).ToString());
             Clients.ToList().ForEach(x => x.Socket.Send(message));
         }
 

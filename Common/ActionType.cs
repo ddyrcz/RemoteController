@@ -6,11 +6,10 @@ using System.Threading.Tasks;
 
 namespace Common
 {
-    public enum MessageType
+    public enum ActionType
     {
         Shutdown,
         ChangeWallpaper,
         SystemBeep,
-
     }
 }

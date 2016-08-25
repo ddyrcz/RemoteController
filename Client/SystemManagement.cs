@@ -16,7 +16,7 @@ namespace Client
         public static void ManageCommands(SocketModel client)
         {
             IAction action = null;
-            MessageType message;
+            ActionType message;
 
             while (true)
             {
@@ -26,15 +26,15 @@ namespace Client
                 {
                     switch (message)
                     {
-                        case MessageType.Shutdown:
+                        case ActionType.Shutdown:
                             action = new Shutdown();
                             break;
 
-                        case MessageType.ChangeWallpaper:
+                        case ActionType.ChangeWallpaper:
                             action = new ChangeWallpaper();
                             break;
 
-                        case MessageType.SystemBeep:
+                        case ActionType.SystemBeep:
                             action = new SystemBeep();
                             break;
 
