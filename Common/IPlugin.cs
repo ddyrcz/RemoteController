@@ -11,5 +11,6 @@ namespace Common
         ActionType GetType();
         Guid GetGuid();
         void Invoke();
+        int GetPriority();
     }
 }

@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Plugings
+namespace Plugins
 {
     public class Shutdown : IPlugin
     {
@@ -26,6 +26,11 @@ namespace Plugings
             initProcess.CreateNoWindow = true;
             initProcess.UseShellExecute = false;
             Process.Start(initProcess);
+        }
+
+        public int GetPriority()
+        {
+            return 1;
         }
     }
 }

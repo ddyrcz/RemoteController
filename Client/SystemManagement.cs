@@ -49,6 +49,7 @@ namespace Client
         {
             availablePlugins
                 .Where(x => x.GetType() == type)
+                .OrderBy(x => x.GetPriority())
                 .ToList()
                 .ForEach(x => x.Invoke());
         }

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Plugings
+namespace Plugins
 {
     public class SystemBeep : IPlugin
     {
@@ -22,6 +22,11 @@ namespace Plugings
         public void Invoke()
         {
             Console.Beep();
+        }
+
+        public int GetPriority()
+        {
+            return 1;
         }
     }
 }
