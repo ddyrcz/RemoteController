@@ -66,7 +66,9 @@
     <Compile Include="SystemManagement.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -85,7 +87,7 @@
       <Project>{9cf1f7e3-4bd5-4e84-92f3-e7d7c54b1d68}</Project>
       <Name>Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Plugings\Plugins.csproj">
+    <ProjectReference Include="..\Plugins\Plugins.csproj">
       <Project>{2c9ac816-9cdf-4512-9650-bd836a14e48e}</Project>
       <Name>Plugins</Name>
     </ProjectReference>
